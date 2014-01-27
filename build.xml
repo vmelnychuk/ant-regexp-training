@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="regexp-training" default="menu" basedir=".">
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    <property file="build.properties" />
+    <property environment="env" />
+    <target name="menu" description="menu interface">
+        <local name="action" />
+        <echo message="Welcome to RegExp training task" />
+        <echo message="Choose action and enter it number" />
+        <echo message="[0] init enviroment" />
+        <echo message="[1] get project from github" />
+        <echo message="[2] build project" />
+        <echo message="[3] run project" />
+        <echo message="[4] clean" />
+        <echo message="[5] exit" />
+        <input message="Choose action: "
+			validargs="0,1,2,3,4,5"
+			addproperty="action"
+			defaultvalue="0" />
+        <echo message="You chose: [${action}]" />
+        <switch value="${action}">
+            <case value="0">
+                <antcall target="init" />
+            </case>
+            <case value="1">
+                <antcall target="get-repo" />
+            </case>
+            <case value="2">
+                <antcall target="build" />
+            </case>
+            <case value="3">
+                <antcall target="execute" />
+            </case>
+            <case value="4">
+                <antcall target="clean" />
+            </case>
+            <case value="5">
+                <antcall target="exit" />
+            </case>
+        </switch>
+    </target>
+    <target name="init">
+        <echo message="Initializing..." />
+        <mkdir dir="${working.dir}" />
+        <antcall target="menu" />
+    </target>
+    <target name="get-repo">
+        <echo message="Start downloading..." />
+        <exec executable="cmd">
+            <arg value="/c" />
+            <arg line="git clone -b ${repo.branch} ${git.repo} ${working.dir}" />
+        </exec>
+        <antcall target="menu" />
+    </target>
+    <target name="build">
+        <echo message="Start building..." />
+        <exec dir="${working.dir}" executable="cmd">
+            <arg value="/c" />
+            <arg value="${env.M2}\mvn.bat" />
+            <arg line="compile" />
+        </exec>
+        <antcall target="menu" />
+    </target>
+    <target name="execute">
+        <echo message="Executing..." />
+        <local name="input.file" />
+        <local name="output.file" />
+        <input message="Enter input file name: "
+			addproperty="input.file"
+			defaultvalue="${default.input}" />
+        <input message="Enter output file name: "
+			addproperty="output.file"
+			defaultvalue="${default.output}" />
+        <exec dir="${working.dir}" executable="cmd">
+            <arg value="/c" />
+            <arg value="${env.M2}\mvn.bat" />
+            <arg line="exec:java -Dinput=${input.file} -Doutput=${output.file}" />
+        </exec>
+        <exec executable="cmd">
+            <arg value="/c" />
+            <arg line="cls" />
+        </exec>
+        <concat>
+            <fileset file="${output.file}" />
+        </concat>
+        <antcall target="menu" />
+    </target>
+    <target name="clean">
+        <echo message="Cleaning..." />
+        <delete dir="${working.dir}" />
+        <antcall target="menu" />
+    </target>
+    <target name="exit">
+        <echo message="Exit" />
+    </target>
+</project>
+
