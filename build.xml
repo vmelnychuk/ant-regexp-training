@@ -71,10 +71,13 @@
         <input message="Enter output file name: "
 			addproperty="output.file"
 			defaultvalue="${default.output}" />
+    	<input message="Enter your regexp: "
+    	            addproperty="regexp"
+    	            defaultvalue="${default.regexp}" />
         <exec dir="${working.dir}" executable="cmd">
             <arg value="/c" />
             <arg value="${maven.run}" />
-            <arg line="exec:java -Dinput=${input.file} -Doutput=${output.file}" />
+            <arg line="exec:java -Dinput=${input.file} -Doutput=${output.file} -Dregexp=${regexp}" />
         </exec>
         <exec executable="cmd">
             <arg value="/c" />

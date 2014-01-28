@@ -14,6 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<input>input.txt</input>
 		<output>output.txt</output>
+		<regexp>aaa</regexp>
 	</properties>
 
 	<dependencies>
@@ -45,6 +46,7 @@
                                         <arguments>
                                                 <argument>${input}</argument>
                                                 <argument>${output}</argument>
+                                                <argument>${regexp}</argument>
                                         </arguments>
                                 </configuration>
                         </plugin>
