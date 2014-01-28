@@ -38,7 +38,7 @@ public class App {
 	    			  if (hasGroups){
 	    				  for (int i = 1; i <= matcher.groupCount(); i++) {
 	    					  if (matcher.group(i) != null)
-	    					  System.out.println(matcher.group(i));
+	    					  System.out.println("Capture group: " + matcher.group(i));
 	    				  }
 	    			  }
 	    			  outputStream.println(matcher.group());
