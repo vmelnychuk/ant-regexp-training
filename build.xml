@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="regexp-training" default="menu" basedir=".">
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-    <property file="build.properties" />
     <property environment="env" />
+	<property file="build.properties" />
     <target name="menu" description="menu interface">
         <local name="action" />
         <echo message="Welcome to RegExp training task" />
@@ -56,7 +56,7 @@
         <echo message="Start building..." />
         <exec dir="${working.dir}" executable="cmd">
             <arg value="/c" />
-            <arg value="${env.M2}\mvn.bat" />
+            <arg value="${maven.run}" />
             <arg line="compile" />
         </exec>
         <antcall target="menu" />
@@ -73,7 +73,7 @@
 			defaultvalue="${default.output}" />
         <exec dir="${working.dir}" executable="cmd">
             <arg value="/c" />
-            <arg value="${env.M2}\mvn.bat" />
+            <arg value="${maven.run}" />
             <arg line="exec:java -Dinput=${input.file} -Doutput=${output.file}" />
         </exec>
         <exec executable="cmd">
